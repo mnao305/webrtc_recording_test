@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSで録音してみるテスト</title>
+  </head>
+  <body>
+    <p>録音するテスト。開始10秒で自動ダウンロード</p>
+    <div>
+      <button id="recordingBtn">録音</button>
+      <span id="recordingStatus" style="display: none;">録音中...</span>
+    </div>
+    <div>
+      <audio id="player" controls></audio>
+    </div>
+    <div>
+      <a id="downloadLink" download="test.webm" style="display: none;">音源ダウンロード</a>
+    </div>
+    <script src="./main.js"></script>
+  </body>
+</html>
