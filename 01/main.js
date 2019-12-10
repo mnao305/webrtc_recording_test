@@ -1,5 +1,6 @@
 let mediaRecorder
 let stream
+let url
 
 // ボタンとか取ってきてるだけ
 const btn = document.getElementById('recordingBtn')
@@ -14,6 +15,8 @@ btn.addEventListener('click', async () => {
     audio: true,
     video: false
   })
+  // urlがもうすでに存在していたら開放する
+  if(url) URL.revokeObjectURL(url)
   status.style = 'display: inline;'
   downloadLink.style = 'display: none;'
   player.src = ''
@@ -39,9 +42,10 @@ function captureStop() {
   mediaRecorder.stop()
 
   mediaRecorder.ondataavailable = (e) => {
-    // Blobデータが利用可能になったら、そのデータのURLを
-    player.src  = URL.createObjectURL(e.data)
-    downloadLink.href = URL.createObjectURL(e.data)
+    // Blobデータが利用可能になったら、そのデータのURLをプレイヤーとリンクに入れる
+    url = URL.createObjectURL(e.data)
+    player.src = url
+    downloadLink.href = url
   }
   // デバイスの開放。これをしないとマイクがずっとキャプチャ状態になるよ
   stream.getTracks().forEach(track => track.stop());
