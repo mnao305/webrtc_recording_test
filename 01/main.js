@@ -1,6 +1,7 @@
 let mediaRecorder
 let stream
 
+// ボタンとか取ってきてるだけ
 const btn = document.getElementById('recordingBtn')
 const player = document.getElementById('player')
 const downloadLink = document.getElementById('downloadLink')
@@ -28,7 +29,7 @@ btn.addEventListener('click', async () => {
 function captureStart() {
   // マイクからのメディアストリームを記録する
   mediaRecorder = new MediaRecorder(stream, {
-    // Chromeではwebmしか使えない
+    // Chromeではwebmしか使えない、らしい。
     mimeType: 'audio/webm',
   })
   mediaRecorder.start();
@@ -38,8 +39,10 @@ function captureStop() {
   mediaRecorder.stop()
 
   mediaRecorder.ondataavailable = (e) => {
+    // Blobデータが利用可能になったら、そのデータのURLを
     player.src  = URL.createObjectURL(e.data)
     downloadLink.href = URL.createObjectURL(e.data)
   }
+  // デバイスの開放。これをしないとマイクがずっとキャプチャ状態になるよ
   stream.getTracks().forEach(track => track.stop());
 }
